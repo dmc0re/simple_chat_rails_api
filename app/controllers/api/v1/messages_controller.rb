@@ -1,4 +1,5 @@
 class Api::V1::MessagesController < Api::V1::BaseController
+    before_action :authenticate_with_token!
 
   def index
     channel = Channel.find_by(id: params[:channel_id])
@@ -17,6 +18,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
 
    if channel
       message = channel.messages.build(message_params)
+      message.user = current_user
       return render text: "422 Unprocessable Entity", status: 422 unless message.valid?
 
       message.save!

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109141859) do
+ActiveRecord::Schema.define(version: 20151110150808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,16 +21,43 @@ ActiveRecord::Schema.define(version: 20151109141859) do
     t.citext   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   add_index "channels", ["name"], name: "index_channels_on_name", unique: true, using: :btree
+  add_index "channels", ["user_id"], name: "index_channels_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.string   "text",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "channel_id"
+    t.integer  "user_id"
   end
 
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.citext   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "auth_token"
+  end
+
+  add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  add_foreign_key "channels", "users", on_update: :restrict, on_delete: :restrict
   add_foreign_key "messages", "channels", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "messages", "users", on_update: :restrict, on_delete: :restrict
 end

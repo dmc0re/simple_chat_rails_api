@@ -1,6 +1,7 @@
 json.data do
   json.channels @messages do |message|
     json.id 		message.id
+    json.user_email	message.user.email
     json.text 		message.text
     json.created_time 	message.created_at
   end

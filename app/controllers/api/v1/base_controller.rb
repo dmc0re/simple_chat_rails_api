@@ -1,9 +1,18 @@
 class Api::V1::BaseController < ApplicationController
   protect_from_forgery with: :null_session
 
-  before_action :destroy_session
+  respond_to :json
 
-  def destroy_session
-    request.session_options[:skip] = true
+  # Devise methods overwrites
+  def current_user
+    @current_user ||= User.find_by(auth_token: request.headers['Authorization'])  #TODO: use Devise.secure_compare instead
+  end
+
+  def authenticate_with_token!
+    render json: { errors: "Not authenticated" }, status: :unauthorized unless user_signed_in?
+  end
+
+  def user_signed_in?
+    current_user.present? 
   end
 end
