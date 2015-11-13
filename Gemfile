@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari', '~> 0.16.3'
+gem 'devise', '~> 3.5', '>= 3.5.2'
 
 group :development do
   gem 'byebug'
