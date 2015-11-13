@@ -8,13 +8,11 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   def create
     channel = Channel.new(channel_params)
 
-    unless channel.valid?
-      return render text: "422 Unprocessable Entity", status: 422
+    if channel.save
+      render text: "201 Created", status: 201
+    else
+      render text: "422 Unprocessable Entity", status: 422
     end
-
-    channel.save!
-
-    render text: "201 Created", status: 201
   end
 
    def destroy
@@ -23,7 +21,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
 
     if channel.user == current_user
       if channel
-        if !channel.destroy
+        if channel.destroy
           head status: 204
         else
           render text: "500 Internal Server Error", status: 500
