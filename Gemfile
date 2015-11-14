@@ -24,3 +24,12 @@ group :production do
   gem 'rails_12factor'
   gem 'puma', '~> 2.15', '>= 2.15.3'
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.4'
+end
+
+group :test do
+  gem "factory_girl_rails"
+  gem 'ffaker'
+end

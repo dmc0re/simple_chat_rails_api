@@ -1,4 +1,4 @@
-class Api::V1::ChannelsController < Api::V1::BaseController
+class API::V1::ChannelsController < API::V1::BaseController
   before_action :authenticate_with_token!
 
   def index
@@ -16,7 +16,6 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   end
 
    def destroy
-
     channel = Channel.where(id: params[:id]).first
 
     if channel.user == current_user
