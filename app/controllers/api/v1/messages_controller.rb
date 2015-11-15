@@ -1,4 +1,4 @@
-class API::V1::MessagesController < API::V1::BaseController
+class Api::V1::MessagesController < Api::V1::BaseController
     before_action :authenticate_with_token!
 
   def index

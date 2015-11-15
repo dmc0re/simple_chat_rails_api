@@ -1,7 +1,8 @@
 json.data do
   json.channels @channels do |channel|
-    json.id 	channel.id
-    json.name 	channel.name
+    json.id 		channel.id
+    json.name 		channel.name
+    json.owner_name	channel.user.name
   end
 end
 
