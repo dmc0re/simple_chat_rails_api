@@ -2,7 +2,9 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   before_action :authenticate_with_token!
 
   def index
-    @channels = Channel.order(id: :DESC).page(params[:page])
+    scope = Channel
+    scope = scope.where("id < ?", params[:before_id]) unless params[:before_id].blank?
+    @channels = scope.order(id: :DESC).page(params[:page])
   end
 
   def create
