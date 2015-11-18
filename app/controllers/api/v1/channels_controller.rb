@@ -34,6 +34,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
     else
       render text: "404 Not Found", status: 404
     end
+  end
 
   private
     def channel_params
