@@ -1,5 +1,5 @@
 class Api::V1::MessagesController < Api::V1::BaseController
-    before_action :authenticate_with_token!
+  before_action :authenticate_with_token!
 
   def index
 
@@ -17,7 +17,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
   end
 
   def create
-   channel = Channel.where(id: params[:channel_id]).first
+    channel = Channel.where(id: params[:channel_id]).first
 
     if channel
       @message = channel.messages.build(message_params)
@@ -26,8 +26,8 @@ class Api::V1::MessagesController < Api::V1::BaseController
       if @message.save
         render :show, status: 201
       else
-        render text: "422 Unprocessable Entity", status: 422
-      end      
+        render json: { errors: @message.errors }, status: 422
+      end
     else
       render text: "404 Not Found", status: 404
     end
@@ -35,7 +35,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
 
   private
 
-    def message_params
-      params.permit(:text)
-    end
+  def message_params
+    params.permit(:text)
+  end
 end

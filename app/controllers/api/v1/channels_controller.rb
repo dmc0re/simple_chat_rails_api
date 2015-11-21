@@ -14,7 +14,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
     if @channel.save
       render :show, status: 201
     else
-      render text: "422 Unprocessable Entity", status: 422
+      render json: {errors: @channel.errors}, status: 422
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   end
 
   private
-    def channel_params
-      params.permit(:name)
-    end
+  def channel_params
+    params.permit(:name)
+  end
 end

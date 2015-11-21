@@ -13,6 +13,6 @@ class Api::V1::BaseController < ActionController::Base
   end
 
   def user_signed_in?
-    current_user.present? 
+    current_user.present?
   end
 end
